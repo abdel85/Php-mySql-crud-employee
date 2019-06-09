@@ -5,8 +5,9 @@
         private  $conn;
         function  __construct()
         {
+            session_start();
             $localhost = "localhost";
-            $dbname = "crud_db";
+            $dbname = "crud";
             $username = "root";
             $password = "";
 
@@ -14,14 +15,14 @@
             $conn = new mysqli($localhost,$username,$password,$dbname);
             // vérifier connection
             if($conn->connect_error){
-                die("Connection failed: " .$conn->error);
+                die("Connection failed: " .$conn->connect_error);
             }else{
-                $this->conn;
+                $this->conn=$conn;
             }
         }
         public function employe_list(){
-                    $sql = "SELECT * FROM employe ORDER BY employe_id ASC ";
-                    $result =  $this->conn->query($sql);
+                    $sql = "SELECT * FROM employe ORDER BY id asc ";
+                    $result=  $this->conn->query($sql);
                     return $result;
                  }
 
@@ -30,8 +31,8 @@
             if(isset($post_data['create_employe'])){
                 $name= mysqli_real_escape_string($this->conn,trim($post_data['name']));
                 $address= mysqli_real_escape_string($this->conn,trim($post_data['address']));
-                $phone= mysqli_real_escape_string($this->conn,trim($post_data['contact']));
-                $status= mysqli_real_escape_string($this->conn,trim($post_data['gender']));
+                $phone= mysqli_real_escape_string($this->conn,trim($post_data['phone']));
+                $status= mysqli_real_escape_string($this->conn,trim($post_data['status']));
 
                 $sql="INSERT INTO employe (name,address, phone,status, VALUES ('$name', '$address','$phone' '$status')";
 
@@ -53,9 +54,9 @@
 
         public function view_employe_id($id){
             if(isset($id)){
-                $employe_id= mysqli_real_escape_string($this->conn,trim($id));
+                $id= mysqli_real_escape_string($this->conn,trim($id));
 
-                $sql="Select * from employe where employe_id='$employe_id'";
+                $sql="Select * from employe where id='$id'";
 
                 $result=  $this->conn->query($sql);
 
@@ -71,10 +72,10 @@
                 $address= mysqli_real_escape_string($this->conn,trim($post_data['address']));
                 $phone= mysqli_real_escape_string($this->conn,trim($post_data['phone']));
                 $status= mysqli_real_escape_string($this->conn,trim($post_data['status']));
-                $employe_id= mysqli_real_escape_string($this->conn,trim($post_data['id']));
+                $id= mysqli_real_escape_string($this->conn,trim($post_data['id']));
 
 
-                $sql="UPDATE employe SET name='$name',address='$address',phone='$phone',status='$status' WHERE employe_id = $employe_id";
+                $sql="UPDATE employe SET name='$name',address='$address',phone='$phone',status='$status' WHERE employe_id = $id";
 
                 $result=  $this->conn->query($sql);
 
@@ -88,13 +89,13 @@
         public function delete_employe_info_by_id($id){
 
             if(isset($id)){
-                $employe_id= mysqli_real_escape_string($this->conn,trim($id));
+                $id= mysqli_real_escape_string($this->conn,trim($id));
 
-                $sql="DELETE FROM  employe  WHERE employe_id =$employe_id";
+                $sql="DELETE FROM  employe  WHERE employe_id =$id";
                 $result=  $this->conn->query($sql);
 
                 if($result){
-                    $_SESSION['message']="Employe a été supprimé succès ";
+                    $_SESSION['message']="employe a été supprimé succès ";
 
                 }
             }

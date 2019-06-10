@@ -6,7 +6,7 @@
         function  __construct()
         {
             $localhost = "localhost";
-            $dbname = "crud_db";
+            $dbname = "crud";
             $username = "root";
             $password = "";
 
@@ -20,7 +20,7 @@
             }
         }
         public function employe_list(){
-                    $sql = "SELECT * FROM employe ORDER BY employe_id ASC ";
+                    $sql = "SELECT * FROM employe ORDER BY id ASC ";
                     $result =  $this->conn->query($sql);
                     return $result;
                  }
@@ -30,8 +30,8 @@
             if(isset($post_data['create_employe'])){
                 $name= mysqli_real_escape_string($this->conn,trim($post_data['name']));
                 $address= mysqli_real_escape_string($this->conn,trim($post_data['address']));
-                $phone= mysqli_real_escape_string($this->conn,trim($post_data['contact']));
-                $status= mysqli_real_escape_string($this->conn,trim($post_data['gender']));
+                $phone= mysqli_real_escape_string($this->conn,trim($post_data['phone']));
+                $status= mysqli_real_escape_string($this->conn,trim($post_data['status']));
 
                 $sql="INSERT INTO employe (name,address, phone,status, VALUES ('$name', '$address','$phone' '$status')";
 

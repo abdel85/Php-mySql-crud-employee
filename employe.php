@@ -31,6 +31,7 @@ class Employe
             $status= mysqli_real_escape_string($this->conn,trim($post_data['status']));
             $sql="INSERT INTO employe (name,address, phone,status, VALUES ('$name', '$address','$phone' '$status')";
             $result=  $this->conn->query($sql);
+          
             if($result){
                 $_SESSION['message']=" Les données ont ete enregistrée avec succes";
                 header('Location: index.php');
@@ -64,7 +65,7 @@ class Employe
     public function delete_employe_info_by_id($id){
         if(isset($id)){
             $id= mysqli_real_escape_string($this->conn,trim($id));
-            $sql="DELETE FROM  employe  WHERE employe_id =$id";
+            $sql="DELETE FROM  employe  WHERE id =$id";
             $result=  $this->conn->query($sql);
             if($result){
                 $_SESSION['message']="employe a été supprimé succès ";
@@ -72,6 +73,7 @@ class Employe
         }
         header('Location: index.php');
     }
+
     function __destruct() {
         mysqli_close($this->conn);
     }
